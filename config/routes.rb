@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :users
 	root 'meetings#index'
 	resources :meetings do
 		resources :comments
