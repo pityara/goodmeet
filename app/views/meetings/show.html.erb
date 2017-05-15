@@ -1,19 +1,23 @@
+<% if notice %>
 <p id="notice"><%= notice %></p>
-
+<% end %>
 <p>
-  <strong>Title:</strong>
-  <%= @meeting.title %>
+  <h1><%= @meeting.title %></h1>
 </p>
 
 <p>
-  <strong>Description:</strong>
-  <%= @meeting.description %>
+  <%= image_tag @meeting.image_url %>
 </p>
 
 <p>
-  <strong>Image url:</strong>
-  <%= @meeting.image_url %>
+  <%= sanitize @meeting.description %>
 </p>
 
-<%= link_to 'Edit', edit_meeting_path(@meeting) %> |
-<%= link_to 'Back', meetings_path %>
+<h2>Комментарии</h2>
+<%= render @meeting.comments %>
+
+
+<h2>Добавить комментарий:</h2>
+<%= render 'comments/form' %>
+
+<%= link_to 'Редактировать', edit_meeting_path(@meeting) %>

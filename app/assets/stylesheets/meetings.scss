@@ -1,3 +1,84 @@
-// Place all the styles related to the Meetings controller here.
+// Place all the styles related to the Store controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.meetings {
+  width: 100%;
+  padding: 1em;
+  background: white;
+  width: 100%;
+  img {
+    width: 200px;
+  } 
+  h1 {
+    margin: 0;
+    padding-bottom: 0em;
+    font:  250% sans-serif;
+    color: #226;
+    border-bottom: 2px dotted #77d;
+    width: 95%;
+  }
+  .line {
+    padding-left: 50px;
+    position: relative;
+    width: 98%;
+    .entry_r {
+      padding-top: 10px;
+      float: right; 
+      width: 50%;
+
+      img {
+        width: 60px;
+        height: 60px;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        float:left;
+        box-shadow: -19px 0 22px -19px #000, 19px 0 22px -19px #000;
+        -webkit-border-radius: 50em;
+        -moz-border-radius: 50em;
+        border-radius: 50em;
+     }
+
+      h3 {
+        font-size: 120%;
+        font-family: sans-serif;
+        margin-left: 100px;
+        margin-top: 0;
+        margin-bottom: 2px;
+        color: #227;
+        text-align:center;
+        text-decoration: none;
+      }
+    }
+      .entry_l {
+      padding-top: 10px;
+      float: left; 
+      width: 50%;
+      background: #ffffff;
+
+      img {
+        width: 60px;
+        height: 60px;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        float: left;
+        box-shadow: -19px 0 22px -19px #000, 19px 0 22px -19px #000;
+        -webkit-border-radius: 50em;
+        -moz-border-radius: 50em;
+        border-radius: 50em;
+      }
+
+      h3 {
+        font-size: 120%;
+        font-family: sans-serif;
+        margin-left: 100px;
+        margin-top: 0;
+        margin-bottom: 2px;
+        color: #227;
+        float: right;
+        text-decoration: none;
+      }
+    }
+
+  }
+}
