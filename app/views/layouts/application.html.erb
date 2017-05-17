@@ -11,6 +11,16 @@
   <header>
     <%= image_tag("logo.png") %>
     <%= @page_title || "GOODMEET" %>
+    <div class="login">
+    	<% if session[:user_id] %>
+    		Добро пожаловать, <%= (User.find_by(id: session[:user_id])).name %>
+    		<%=link_to  "Выйти", '/sessions/destroy' %>
+    	<% else %>
+    		<%=link_to  "Зарегистрируйтесь", new_user_path %>
+    		, или
+    		<%=link_to  "войдите", login_path %>
+    	<% end %>
+    </div>
   </header>
   <div class="<%= controller.controller_name %>">
       <%= yield %>

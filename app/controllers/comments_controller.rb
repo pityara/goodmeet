@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-
+	skip_before_action :authorized_admin, only: :create
 	def create
 		@meeting = Meeting.find(params[:meeting_id])
 		@comment = @meeting.comments.create(comment_params)

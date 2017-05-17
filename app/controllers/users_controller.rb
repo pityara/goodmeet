@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-
+  skip_before_action :authorized_admin, only: [:create, :new]
   # GET /users
   # GET /users.json
   def index
@@ -25,10 +25,11 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-
+    @user.authenticate(params[:password])
+    session[:user_id] = @user.id
     respond_to do |format|
       if @user.save
-        format.html { redirect_to users_url, notice: 'Пользователь #{@user.name} успешно создан' }
+        format.html { redirect_to root_path, notice: 'Пользователь #{@user.name} успешно создан' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
