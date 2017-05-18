@@ -1,9 +1,14 @@
-<%= form_for([@meeting, @meeting.comments.build]) do |f| %>
-  <p>
-    <%= f.label "Введите текст" %><br>
-    <%= f.text_area :body %>
-  </p>
-  <p>
-    <%= f.submit %>
-  </p>
+<% if session[:user_id] %>
+	<h2>Добавить комментарий:</h2>
+	<%= form_for([@meeting, @meeting.comments.build]) do |f| %>
+    <p>
+    	<%= f.label "Введите текст" %><br>
+    	<%= f.text_area :body %>
+    </p>
+    <p>
+    	<%= f.submit %>
+    </p>
+	<% end %>
+<% else %>
+	<h2>Зарегистрируйтесь или войдите, что бы оставить комментарий</h2>
 <% end %>

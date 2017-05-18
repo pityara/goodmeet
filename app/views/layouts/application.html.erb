@@ -9,9 +9,9 @@
 </head>
 <body>
   <header>
-    <%= image_tag("logo.png") %>
+    <%= link_to image_tag("logo.png"), root_path %>
     <%= @page_title || "GOODMEET" %>
-    <div class="login">
+    <div id="login">
     	<% if session[:user_id] %>
     		Добро пожаловать, <%= (User.find_by(id: session[:user_id])).name %>
     		<%=link_to  "Выйти", '/sessions/destroy' %>
