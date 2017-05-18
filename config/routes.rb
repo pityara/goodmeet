@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     delete 'logout' => :destroy
   end
 
+  get "participate" => "meetings#participate"
+
   get "sessions/create"
 
   get "sessions/destroy"

@@ -1,21 +1,29 @@
 <% if notice %>
 <p id="notice"><%= notice %></p>
 <% end %>
-<p>
-  <h1><%= @meeting.title %></h1>
-</p>
+<div id="mtitle">
+  <%= @meeting.title %>
+</div>
 
-<p>
-  <%= image_tag @meeting.image_url %>
-</p>
-
-<p>
-  <%= sanitize @meeting.description %>
-</p>
-
-<h2>Комментарии</h2>
-<%= render @meeting.comments %>
-
-<%= render 'comments/form' %>
-
-<%= link_to 'Редактировать', edit_meeting_path(@meeting) %>
+<div id="meeting">
+	<div id="description">
+  		<%= image_tag @meeting.image_url %>
+  		<%= sanitize @meeting.description %>
+  	</div>
+	<div id="visiters">
+		<ul> Участники:
+		<% @meeting.users.each do |user| %>
+		<li><%= user.name %></li>
+		<% end %>
+		</ul>
+	</div>
+	<br>
+	<div id="comments">
+		<h2>Комментарии</h2>
+		<%= render @meeting.comments %>
+	</div>
+	<%= render 'comments/form' %>
+	<% unless @meeting.users.find_by(id: session[:user_id]) %>
+	<%= link_to 'Учавствовать', participate_path %>
+	<% end %>
+</div>

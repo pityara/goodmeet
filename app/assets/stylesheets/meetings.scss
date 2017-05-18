@@ -1,7 +1,29 @@
 // Place all the styles related to the Store controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
+#mtitle {
+    margin: 0;
+    padding-bottom: 0em;
+    font:  250% sans-serif;
+    color: #226;
+    border-bottom: 2px dotted #77d;
+    width: 95%;
+}
+#meeting {
+  padding-left: 50px;
+  position: relative;
+  width: 98%;
+  #description {
+    float: left;
+  }
+  #visiters {
+    padding-right: 50px;
+    float: right;
+  }
+  #comments {
+    float: right;
+  }
+}
 .meetings {
   width: 100%;
   padding: 1em;

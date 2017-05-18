@@ -1,6 +1,6 @@
 class MeetingsController < ApplicationController
-  skip_before_action :authorized_admin, only: [:index, :show]
-  skip_before_action :authorized_moderator, only: [:index, :show]
+  skip_before_action :authorized_admin, only: [:index, :show, :participate]
+  skip_before_action :authorized_moderator, only: [:index, :show, :participate]
   before_action :set_meeting, only: [:show, :edit, :update, :destroy]
 
   # GET /meetings
@@ -12,6 +12,7 @@ class MeetingsController < ApplicationController
   # GET /meetings/1
   # GET /meetings/1.json
   def show
+    $meeting = @meeting
   end
 
   # GET /meetings/new
@@ -51,6 +52,11 @@ class MeetingsController < ApplicationController
         format.json { render json: @meeting.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def participate
+    $meeting.users << User.find(session[:user_id])
+    redirect_to meeting_path($meeting), notice: 'Теперь вы учавствуете в этой встрече'
   end
 
   # DELETE /meetings/1
