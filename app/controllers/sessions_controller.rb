@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
   skip_before_action :authorized_admin
+  skip_before_action :authorized_moderator
+  
   def new
   end
 
