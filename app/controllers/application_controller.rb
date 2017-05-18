@@ -5,13 +5,13 @@ class ApplicationController < ActionController::Base
 
   private
   	def authorized_admin
-  		unless session[:user_id] == 1
+  		unless session[:user_id] == 1 
   			redirect_to root_path, notice: "У вас нет прав администратора!"
   		end
   	end
 
   	def authorized_moderator
-  		unless session[:user_id] == 2
+  		unless session[:user_id] == 2 or session[:user_id] == 1
   			redirect_to root_path, notice: "У вас нет прав модератора!"
   		end
   	end

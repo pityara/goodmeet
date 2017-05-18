@@ -1,8 +1,7 @@
 	<p>
-		<strong>Комментарий:</strong>
+		<strong><%= comment.user.name %>:</strong>
 		<%= comment.body %>
-	</p> 
-
-	<p>
+		<% if session[:user_id] == 1 or session[:user_id] == 2 %>
 		<%= link_to 'Удалить комментарий', [comment.meeting, comment], method: :delete, data: { confirm: 'Вы уверены?' } %>
+		<% end %>
 	</p> 
