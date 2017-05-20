@@ -1,0 +1,6 @@
+<h1>Личный кабинет</h1>
+<div id="photo">
+<%= image_tag @user.avatar(:thumb) %>
+</div>
+<h2><%= @user.name %></h2>
+<span id="status">Ваш текущий статус:<%= @user.status %></span>

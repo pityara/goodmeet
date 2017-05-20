@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'lk' => "lk#show"
+
   get 'admin' => 'admin#index'
 
   controller :sessions do
