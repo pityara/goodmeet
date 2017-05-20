@@ -2,11 +2,6 @@ class ProfileController < ApplicationController
 	skip_before_action :authorized_admin
 	skip_before_action :authorized_moderator
 
-
-	def not_my_profile
-		@profile = User.find(params[:id]).profile
-	end
-
 	def new
 		@profile = Profile.new
 	end
@@ -45,6 +40,12 @@ class ProfileController < ApplicationController
 		@profile.update(profile_params)
 		redirect_to profile_path
 	end
+
+	def not_my_profile
+		@profile = User.find(params[:id]).profile
+	end
+
+	
 	private
 
 	def profile_params

@@ -4,9 +4,8 @@ Rails.application.routes.draw do
 
   get 'admin' => 'admin#index'
 
-  get 'profile/:id' =>'profile#not_my_profile', as: "not_my_profile"
-
   get 'profile/edit' => 'profile#edit', as: "profile_edit"
+  get 'profile/:id' =>'profile#not_my_profile', as: "not_my_profile"
 
   patch 'profile' => 'profile#update'
 
