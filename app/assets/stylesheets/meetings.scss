@@ -1,7 +1,19 @@
 // Place all the styles related to the Store controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-.avatar { 
+
+.visiter {
+  outline: 1px solid #000;
+  background-color: #E0FFFF;
+  a {
+    text-decoration: none;
+  }
+  a:hover {
+    background: #fff;
+    color: #000;
+    
+  }
+  .avatar {
     margin: 10px;
     padding: 0;
     width:64px;
@@ -12,6 +24,7 @@
         -webkit-border-radius: 50em;
         -moz-border-radius: 50em;
         border-radius: 50em;
+  }
 }
 #mtitle {
     margin: 0;

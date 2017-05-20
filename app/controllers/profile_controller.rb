@@ -3,6 +3,10 @@ class ProfileController < ApplicationController
 	skip_before_action :authorized_moderator
 
 
+	def not_my_profile
+		@profile = User.find(params[:id]).profile
+	end
+
 	def new
 		@profile = Profile.new
 	end
