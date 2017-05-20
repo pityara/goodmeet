@@ -1,7 +1,7 @@
 class Meeting < ApplicationRecord
 	has_many :comments, dependent: :destroy
 	has_and_belongs_to_many :users
-	validates :title, :description, :image_url, presence: true
+	validates :title, :description, presence: true
   	has_attached_file :image, 
     	styles: { medium: "300x300#", thumb: "100x100#" },
     	:convert_options => {
