@@ -13,7 +13,7 @@
 	<div id="visiters">
 		<ul> Участники:
 		<% @meeting.users.each do |user| %>
-		<li><%= image_tag user.avatar(:thumb), :class => "avatar" %><%= user.name %></li>
+		<li><%= image_tag user.profile.avatar(:thumb), :class => "avatar" %><%= user.profile.name %></li>
 		<% end %>
 		</ul>
 	</div>

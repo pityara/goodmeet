@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [ :show, :edit, :update, :destroy ]
-  skip_before_action :authorized_admin, only: [ :new, :create, :update ]
-  skip_before_action :authorized_moderator, only: [ :create, :new, :update ]
+  skip_before_action :authorized_admin, only: [ :new, :create]
+  skip_before_action :authorized_moderator, only: [ :create, :new]
   # GET /users
   # GET /users.json
   def index
@@ -26,11 +26,12 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-    respond_to do |format|
+        respond_to do |format|
       if @user.save
+        @user.profile = Profile.create!(name: "name", age: 0, city: "city", user_id: @user.id)
         session[:user_id] = @user.id
         session[:user_status] = @user.status
-        format.html { redirect_to root_path, notice: 'Вы успешно зарегистрировались!' }
+        format.html { redirect_to profile_new_path, notice: 'Вы успешно зарегистрировались!' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }

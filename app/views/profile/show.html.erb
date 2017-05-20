@@ -1,0 +1,23 @@
+<% if notice %>
+<p id="notice"><%= notice %></p>
+<% end %>
+<%= image_tag @profile.avatar.url(:thumb), class: "avatar" %>
+
+<p>
+  <strong>Имя:</strong>
+  <%= @profile.name %>
+</p>
+<p>
+  <strong>Возраст:</strong>
+  <%= @profile.age %>
+</p>
+<p>
+  <strong>Город:</strong>
+  <%= @profile.city %>
+</p>
+
+<p>
+  <strong>Рейтинг:</strong>
+  <%= @profile.rating %>
+</p>
+<%= link_to 'Редактировать профиль', profile_edit_path %>

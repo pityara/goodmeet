@@ -1,10 +1,16 @@
 Rails.application.routes.draw do
 
-  get 'lk_show' => "lk#show"
-
-  get 'lk_edit' => "lk#edit"
+  get 'profile' => "profile#show"
 
   get 'admin' => 'admin#index'
+
+  get 'profile/edit' => 'profile#edit', as: "profile_edit"
+
+  patch 'profile' => 'profile#update'
+
+  get 'profile/new' => 'profile#new', as: "profile_new"
+
+  post 'profile' => 'profile#create'
 
   controller :sessions do
     get 'login' => :new
