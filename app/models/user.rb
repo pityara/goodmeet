@@ -14,7 +14,7 @@ class User < ApplicationRecord
       :region => ENV['AWS_REGION']
     },
     :path => ":filename.:extension",
-    :default_url => "default_img.png"
+    :default_url => "user_img.png"
 
     validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
   has_secure_password

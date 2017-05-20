@@ -2,8 +2,19 @@ class Meeting < ApplicationRecord
 	has_many :comments, dependent: :destroy
 	has_and_belongs_to_many :users
 	validates :title, :description, :image_url, presence: true
-	validates :image_url, allow_blank: true, format: {
-    with: %r{\.(gif|jpg|png)\Z}i,
-    message: 'должен указывать на изображение формата GIF, JPG или PNG.'
-	}
+  	has_attached_file :image, 
+    	styles: { medium: "300x300#", thumb: "100x100#" },
+    	:convert_options => {
+    	:thumb => "-quality 75 -strip" },
+    	:storage => :s3,
+    	:s3_credentials => {
+      	:bucket => ENV['S3_BUCKET_NAME'],
+      	:access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+      	:secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
+      	:region => ENV['AWS_REGION']
+    	},
+    	:path => ":filename.:extension",
+    	:default_url => "meeting_img.png"
+
+    validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
 end

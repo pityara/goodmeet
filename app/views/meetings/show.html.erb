@@ -7,7 +7,7 @@
 
 <div id="meeting">
 	<div id="description">
-  		<%= image_tag @meeting.image_url, :class => "meeting_image" %>
+  		<%= image_tag @meeting.image(:thumb), :class => "meeting_image" %>
   		<%= sanitize @meeting.description %>
   	</div>
 	<div id="visiters">
