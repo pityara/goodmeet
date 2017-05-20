@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
-  get 'lk' => "lk#show"
+  get 'lk_show' => "lk#show"
+
+  get 'lk_edit' => "lk#edit"
 
   get 'admin' => 'admin#index'
 

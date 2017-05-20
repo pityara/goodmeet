@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-  skip_before_action :authorized_admin, only: [:create, :new]
-  skip_before_action :authorized_moderator, only: [:create, :new]
+  before_action :set_user, only: [ :show, :edit, :update, :destroy ]
+  skip_before_action :authorized_admin, only: [ :new, :create, :update ]
+  skip_before_action :authorized_moderator, only: [ :create, :new, :update ]
   # GET /users
   # GET /users.json
   def index
@@ -29,6 +29,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         session[:user_id] = @user.id
+        session[:user_status] = @user.status
         format.html { redirect_to root_path, notice: 'Вы успешно зарегистрировались!' }
         format.json { render :show, status: :created, location: @user }
       else
@@ -41,13 +42,13 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to users_url, notice: 'Данные о пользователе #{@user.name} успешно обновлены' }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @user.update(user_params)
+          format.html { redirect_to users_url, notice: 'Данные о пользователе #{@user.name} успешно обновлены' }
+          format.json { render :show, status: :ok, location: @user }
+        else
+          format.html { render :edit }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end

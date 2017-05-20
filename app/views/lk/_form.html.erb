@@ -1,0 +1,40 @@
+<%= form_for user, :html => { :multipart => true } do |f| %>
+  <% if user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user.errors.count, "error") %> сведения о данном пользователе не могут быть обновлены:</h2>
+
+      <ul>
+      <% user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <fieldset>
+  <legend>Введите информацию о пользователе</legend>
+  <div class="field">
+    <%= f.label "Имя" %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label "Пароль" %>
+    <%= f.password_field :password %>
+  </div>
+
+  <div class="field">
+    <%= f.label "Пароль еще раз" %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+
+  <div>
+    <%= f.label "Фото" %>
+    <%= f.file_field :avatar %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
+  </fieldset>
+<% end %>

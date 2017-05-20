@@ -18,6 +18,7 @@ class SessionsController < ApplicationController
 
   def destroy
   	session[:user_id] = nil
-  	redirect_to root_url, notice: "сеанс работы завершен"
+    session[:user_status] = nil
+  	redirect_to root_url, notice: "Cеанс работы завершен"
   end
 end
