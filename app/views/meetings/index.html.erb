@@ -10,7 +10,15 @@
       <div class="<%= cycle('entry_l', 'entry_r') %>">
         <%=link_to image_tag(meeting.image), meeting_path(meeting)%>
         <h2><%= truncate(meeting.title, length: 12) %></h2>
+        Создатель:<%= meeting.creator.user.profile.name %>
       </div>
     </div>
     <% end %>
+    <div class="line">
+      <div class='entry_l'>
+        <%=link_to image_tag('meeting_add_img.jpg'), new_meeting_path %>
+        <h2> Создать встречу</h2>
+      </div>
+    </div>
+
 

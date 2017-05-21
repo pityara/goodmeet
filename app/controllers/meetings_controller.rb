@@ -1,6 +1,6 @@
 class MeetingsController < ApplicationController
-  skip_before_action :authorized_admin, only: [:index, :show, :participate]
-  skip_before_action :authorized_moderator, only: [:index, :show, :participate]
+  skip_before_action :authorized_admin, only: [:index, :show, :participate, :new, :create]
+  skip_before_action :authorized_moderator, only: [:index, :show, :participate, :new, :create]
   before_action :set_meeting, only: [:show, :edit, :update, :destroy]
 
   # GET /meetings
@@ -28,7 +28,7 @@ class MeetingsController < ApplicationController
   # POST /meetings.json
   def create
     @meeting = Meeting.new(meeting_params)
-
+    @meeting.creator = Creator.find_by(user: User.find(session[:user_id]))
     respond_to do |format|
       if @meeting.save
         format.html { redirect_to @meeting, notice: 'Встреча бы успешно создана!' }

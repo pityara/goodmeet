@@ -5,13 +5,14 @@ Rails.application.routes.draw do
   get 'admin' => 'admin#index'
 
   get 'profile/edit' => 'profile#edit', as: "profile_edit"
-  get 'profile/:id' =>'profile#not_my_profile', as: "not_my_profile"
 
   patch 'profile' => 'profile#update'
 
   get 'profile/new' => 'profile#new', as: "profile_new"
 
   post 'profile' => 'profile#create'
+  
+  get 'profile/:id' =>'profile#not_my_profile', as: "not_my_profile"
 
   controller :sessions do
     get 'login' => :new

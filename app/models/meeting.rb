@@ -17,4 +17,5 @@ class Meeting < ApplicationRecord
     	:default_url => "meeting_img.png"
 
     validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
+    belongs_to :creator
 end

@@ -11,6 +11,8 @@
   		<%= sanitize @meeting.description %>
   	</div>
 	<div id="visiters">
+		<strong>Создатель встречи:</strong>
+		<div class="visiter"><%= link_to (image_tag @meeting.creator.user.profile.avatar(:thumb), :class => "avatar"), not_my_profile_path(@meeting.creator.user) %>	<%= @meeting.creator.user.profile.name %></div>
 		 Участники:
 		<% @meeting.users.each do |user| %>
 		<div class="visiter"><%=link_to (image_tag user.profile.avatar(:thumb), :class => "avatar"), not_my_profile_path(user) %><%= user.profile.name %></div>
@@ -22,7 +24,7 @@
 		<%= render @meeting.comments %>
 	</div>
 	<%= render 'comments/form' %>
-	<% unless @meeting.users.find_by(id: session[:user_id]) %>
+	<% unless @meeting.users.find_by(id: session[:user_id]) or @meeting.creator.user ==User.find(session[:user_id]) %>
 	<%= link_to 'Учавствовать', participate_path %>
 	<% end %>
 </div>

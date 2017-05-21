@@ -26,6 +26,7 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
+    Creator.create(user: @user)
         respond_to do |format|
       if @user.save
         @user.profile = Profile.create!(name: "name", age: 0, city: "city", user_id: @user.id)
