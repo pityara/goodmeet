@@ -20,20 +20,21 @@
  }
  body {
   margin:0;
+  width:100%;
  }
 header {
-  background-color: #66CDAA;
-  width:98%;
-  height: 70px;
+  background-color: #f4ad3d;
+  width:99%;
+  height: 50px;
   padding: 10px;
-  border-bottom: 2px solid;
   font: small-caps 40px/40px "Times New Roman", serif;
-  text-align: center;
   img {
+    margin-left: 20px;
     float: left;
+    width: 55px;
   }
   #login {
-    font: small-caps 20px/10px "Times New Roman", serif;
+    font: small-caps 15px/10px "Times New Roman", serif;
     text-align: right;
   }
 }
