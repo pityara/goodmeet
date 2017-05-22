@@ -1,7 +1,10 @@
 class Meeting < ApplicationRecord
 	has_many :comments, dependent: :destroy
 	has_and_belongs_to_many :users
-	validates :title, :description, presence: true
+	validates :title, :description, :date, :required_rating, presence: true
+  validates_date :date, :after => :today,
+                        :after_message => "должна быть позже сегодняшнего дня"
+  validates_numericality_of :required_rating, greater_than_or_equal_to: 0
   	has_attached_file :image, 
     	styles: { medium: "300x300#", thumb: "100x100#" },
     	:convert_options => {

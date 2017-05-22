@@ -9,8 +9,12 @@
 
       <div class="<%= cycle('entry_l', 'entry_r') %>">
         <%=link_to image_tag(meeting.image), meeting_path(meeting)%>
-        <h2><%= truncate(meeting.title, length: 12) %></h2>
-        Создатель:<%= meeting.creator.user.profile.name %>
+        <strong><%= truncate(meeting.title, length: 12) %></strong>
+        <br>
+        Создатель:<%= link_to meeting.creator.user.profile.name, not_my_profile_path(meeting.creator.user) %>
+        Требуемый рейтинг: <%= meeting.required_rating %>
+        <br>
+        Дата: <%= meeting.date %>
       </div>
     </div>
     <% end %>

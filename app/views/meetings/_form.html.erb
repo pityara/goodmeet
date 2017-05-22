@@ -12,18 +12,28 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :title %>
+    <%= f.label "Название" %>
     <%= f.text_field :title %>
   </div>
 
   <div class="field">
-    <%= f.label :description %>
+    <%= f.label "Описание" %>
     <%= f.text_area :description %>
   </div>
+
+  <div class="field">
+    <%= f.label "Требуемый рейтинг" %>
+    <%= f.text_field :required_rating %>
+  </div>  
 
   <div>
     <%= f.label "Фото" %>
     <%= f.file_field :image %>
+  </div>
+
+  <div>
+    <%= f.label "Дата" %>
+    <%= f.text_field :date, id: "meeting_date" %>
   </div>
 
   <div class="actions">

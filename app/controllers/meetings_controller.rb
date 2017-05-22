@@ -6,7 +6,7 @@ class MeetingsController < ApplicationController
   # GET /meetings
   # GET /meetings.json
   def index
-    @meetings = Meeting.all
+    @meetings = Meeting.where("required_rating < ?", User.find(session[:user_id]).profile.rating)
   end
 
   # GET /meetings/1
@@ -77,6 +77,6 @@ class MeetingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def meeting_params
-      params.require(:meeting).permit(:title, :description, :image)
+      params.require(:meeting).permit(:title, :description, :image, :date, :required_rating)
     end
 end
