@@ -6,7 +6,11 @@ class MeetingsController < ApplicationController
   # GET /meetings
   # GET /meetings.json
   def index
-    @meetings = Meeting.where("required_rating < ?", User.find(session[:user_id]).profile.rating)
+    if session[:user_id]
+      @meetings = Meeting.where("required_rating < ?", User.find(session[:user_id]).profile.rating)
+    else
+      @meetings = Meeting.all
+    end
   end
 
   # GET /meetings/1
