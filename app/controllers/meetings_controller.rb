@@ -33,9 +33,11 @@ class MeetingsController < ApplicationController
   # POST /meetings.json
   def create
     @meeting = Meeting.new(meeting_params)
-    @meeting.creator = Creator.find_by(user: User.find(session[:user_id]))
+    @meeting.creator = Creator.find_by(user: current_user)
     respond_to do |format|
       if @meeting.save
+        current_user.meetings << @meeting
+        current_user.save
         format.html { redirect_to @meeting, notice: 'Встреча бы успешно создана!' }
         format.json { render :show, status: :created, location: @meeting }
       else
