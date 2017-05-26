@@ -1,7 +1,9 @@
 	<p>
 		<strong><%= comment.user.name %>:</strong>
 		<%= comment.body %>
-		<% if User.find(session[:user_id]) == "admin" or User.find(session[:user_id]) == "moderator"%>
-		<%= link_to 'Удалить комментарий', [comment.meeting, comment], method: :delete, data: { confirm: 'Вы уверены?' } %>
+		<% if current_user %>
+			<% if current_user.status == "admin" or current_user.status == "moderator"%>
+			<%= link_to 'Удалить комментарий', [comment.meeting, comment], method: :delete, data: { confirm: 'Вы уверены?' } %>
+			<% end %>
 		<% end %>
 	</p> 

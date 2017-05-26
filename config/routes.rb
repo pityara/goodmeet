@@ -15,9 +15,9 @@ Rails.application.routes.draw do
   get 'profile/:id' =>'profile#not_my_profile', as: "not_my_profile"
 
   controller :sessions do
-    get 'login' => :new
+    get 'login' => :new, as: "login"
     post 'login' => :create
-    delete 'logout' => :destroy
+    get 'logout' => :destroy
   end
 
   get "participate" => "meetings#participate"

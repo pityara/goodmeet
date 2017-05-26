@@ -25,8 +25,8 @@
       <%= link_to image_tag("logo.png"), root_path %>
       <div id="login">
        <% if session[:user_id] %>
-          Добро пожаловать, <%= link_to (User.find_by(id: session[:user_id])).name, profile_path %>
-        <%=link_to  "Выйти", '/sessions/destroy' %>
+          Добро пожаловать, <%= link_to current_user.name, profile_path %>
+        <%=link_to  "Выйти", logout_path, method: :get %>
        <% else %>
         <%=link_to  "Зарегистрируйтесь", new_user_path %>
         , или
