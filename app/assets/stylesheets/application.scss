@@ -450,12 +450,13 @@ a:hover {
   //background-color: #ADD8E6;
  }
  body {
-  margin:0;
+  margin-top:0;
   width:100%;
  }
 header {
+  margin:0;
   z-index: 1999;
-  position: fixed;
+  //position: fixed;
   background-color: #f4ad3d;
   width:99%;
   height: 50px;
