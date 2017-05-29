@@ -67,8 +67,10 @@ GEM
     ffi (1.9.18)
     figaro (1.1.1)
       thor (~> 0.14)
+    geocoder (1.4.4)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
+    gmaps4rails (2.1.2)
     i18n (0.8.1)
     jbuilder (2.6.4)
       activesupport (>= 3.0.0)
@@ -193,6 +195,8 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.2)
   figaro
+  geocoder
+  gmaps4rails
   jbuilder (~> 2.5)
   jquery-rails
   jquery-ui-rails (= 5.0.5)

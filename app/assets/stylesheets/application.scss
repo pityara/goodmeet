@@ -454,6 +454,8 @@ a:hover {
   width:100%;
  }
 header {
+  z-index: 1999;
+  position: fixed;
   background-color: #f4ad3d;
   width:99%;
   height: 50px;
