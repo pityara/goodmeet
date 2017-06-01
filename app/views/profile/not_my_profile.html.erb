@@ -20,3 +20,11 @@
   <strong>Рейтинг:</strong>
   <%= @profile.rating %>
 </p>
+
+<p>
+  <strong>Статус:</strong>
+  <%= @profile.user.status.name %>
+</p>
+<% if admin? %>
+	<%= link_to "Редактировать", profile_edit_path(@profile) %>
+<% end %>

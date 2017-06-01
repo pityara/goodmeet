@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [ :show, :edit, :update, :destroy ]
-  before_action :authorized_admin, only: [:update, :destroy]
+  before_action :authorized_admin, only: [:update, :destroy, :show, :index]
   before_action :authorized_moderator, only: [:update, :destroy]
   skip_before_action :authorized_user
   # GET /users
@@ -27,6 +27,7 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
+    @user.status_id = 3
     Creator.create(user: @user)
         respond_to do |format|
       if @user.save
@@ -74,6 +75,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :password, :password_confirmation, :avatar)
+      params.require(:user).permit(:name, :password, :password_confirmation, :status_id)
     end
 end

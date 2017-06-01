@@ -30,6 +30,12 @@
     <%= f.label "Фото" %>
     <%= f.file_field :avatar %>
   </div>
+    <% if admin? %>
+    <div>
+      <%= f.label "Рейтинг" %>
+      <%= f.text_field :rating %>
+    </div>
+    <% end %>
 
   <div class="actions">
     <%= f.submit id: "form_button "%>

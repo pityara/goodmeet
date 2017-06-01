@@ -4,5 +4,6 @@ class User < ApplicationRecord
   has_and_belongs_to_many :meetings
   has_one :profile, dependent: :destroy
   has_one :creator, dependent: :destroy
+  belongs_to :status
   has_secure_password
 end

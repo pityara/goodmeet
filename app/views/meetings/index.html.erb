@@ -13,6 +13,12 @@
         <br>
         Создатель:<%= link_to meeting.creator.user.profile.name, not_my_profile_path(meeting.creator.user) %>
         Требуемый рейтинг: <%= meeting.required_rating %>
+        <% if session[:user_id] %>
+          <% if admin? || moder? %>
+            <%= link_to  "Удалить", meeting, method: :delete, data: { confirm: 'Вы уверены?' } %>
+            <%= link_to  "Редактировать", edit_meeting_path(meeting) %>
+          <% end %>
+        <% end %>
         <br>
         Дата: <%= meeting.date %>
       </div>
@@ -24,23 +30,3 @@
         <h2> Создать встречу</h2>
       </div>
     </div>
-<div style='width: 800px;'>
-  <div id="map" style='width: 800px; height: 400px;'></div>
-</div>
-<script type="text/javascript">
-  handler = Gmaps.build('Google');
-  handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
-    markers = handler.addMarkers([
-    <% @meetings.each do |meeting| %>
-    {
-      "lat": <%= meeting.latitude %>,
-      "lng": <%= meeting.longitude %>,
-      "infowindow": "<%= meeting.address %>"
-    }
-  ],
-  <% end %>);
-  handler.bounds.extendWith(markers);
-  handler.fitMapToBounds();
-});
-</script>
-

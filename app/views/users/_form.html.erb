@@ -26,6 +26,12 @@
     <%= f.label "Пароль еще раз" %>
     <%= f.password_field :password_confirmation %>
   </div>
+    <% if session[:user_id] %>
+      <div class="field">
+      <%= f.label :status %><br>
+      <%= f.collection_select :status_id, Status.all, :id, :name %>
+      </div>
+    <% end %>
 
   <div class="actions">
     <%= f.submit %>
