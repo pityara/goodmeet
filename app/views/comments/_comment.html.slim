@@ -1,0 +1,8 @@
+p
+  strong
+    = comment.user.name
+    | :
+  = comment.body
+  - if current_user
+    - if current_user.status_id == 1 or current_user.status_id == 2
+      = link_to 'Удалить комментарий', [comment.meeting, comment], method: :delete, data: { confirm: 'Вы уверены?' }

@@ -1,18 +1,9 @@
 Rails.application.routes.draw do
 
-  get 'profile' => "profile#show"
-
-  get 'admin' => 'admin#index'
-
-  get 'profile/edit' => 'profile#edit', as: "profile_edit"
-
-  patch 'profile' => 'profile#update'
-
-  get 'profile/new' => 'profile#new', as: "profile_new"
-
-  post 'profile' => 'profile#create'
-  
-  get 'profile/:id' =>'profile#not_my_profile', as: "not_my_profile"
+  resources :profiles do
+    get :up_rating, on: :member
+  end
+  get 'admin' => "admin#index"
 
   controller :sessions do
     get 'login' => :new, as: "login"
@@ -20,7 +11,6 @@ Rails.application.routes.draw do
     get 'logout' => :destroy
   end
 
-  get "participate" => "meetings#participate"
 
   get "sessions/create"
 
@@ -29,6 +19,7 @@ Rails.application.routes.draw do
   resources :users
 	root 'meetings#index'
 	resources :meetings do
+    get :participate, on: :member
 		resources :comments
 	end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

@@ -34,7 +34,7 @@ class UsersController < ApplicationController
         @user.profile = Profile.create!(name: "name", age: 0, city: "city", user_id: @user.id)
         session[:user_id] = @user.id
         session[:user_status] = @user.status
-        format.html { redirect_to profile_new_path, notice: 'Вы успешно зарегистрировались!' }
+        format.html { redirect_to  new_profile_path, notice: 'Вы успешно зарегистрировались!' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }

@@ -17,7 +17,6 @@ class MeetingsController < ApplicationController
   # GET /meetings/1
   # GET /meetings/1.json
   def show
-    $meeting = @meeting
   end
 
   # GET /meetings/new
@@ -62,7 +61,7 @@ class MeetingsController < ApplicationController
   end
 
   def participate
-    $meeting.users << User.find(session[:user_id])
+    Meeting.find(params[:id]).users << User.find(session[:user_id])
     redirect_to meeting_path($meeting), notice: 'Теперь вы учавствуете в этой встрече'
   end
 

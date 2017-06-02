@@ -56,6 +56,7 @@ gem 'jquery-ui-rails', '5.0.5'
 gem 'validates_timeliness', '~> 4.0'
 gem 'geocoder'
 gem 'gmaps4rails'
+gem 'slim-rails'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

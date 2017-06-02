@@ -1,5 +1,7 @@
-class ProfileController < ApplicationController
-
+class ProfilesController < ApplicationController
+  before_action :set_profile, only: [ :show, :edit, :update, :destroy, :up_rating ]
+  before_action :authorized_admin, only: [:up_rating]
+  before_action :authorized_moderator, only: [:up_rating]
 	def new
 		@profile = Profile.new
 	end
@@ -26,25 +28,34 @@ class ProfileController < ApplicationController
 
 
 	def show
-		@profile = User.find(session[:user_id]).profile
+		@profile = Profile.find(params[:id])
 	end
 
 	def edit
-		@profile = User.find(session[:user_id]).profile
+		@profile = current_user.profile
 	end
 
 	def update
-		@profile = User.find(session[:user_id]).profile
+		@profile = current_user.profile
 		@profile.update(profile_params)
 		redirect_to profile_path
 	end
+
+  def up_rating
+    @profile.increment!(:rating)
+    redirect_to admin_path
+  end
 
 	def not_my_profile
 		@profile = User.find(params[:id]).profile
 	end
 
-	
+
 	private
+
+  def set_profile
+      @profile = Profile.find(params[:id])
+    end
 
 	def profile_params
       params.require(:profile).permit(:name, :city, :age, :avatar, (:rating if admin?))

@@ -1,0 +1,56 @@
+doctype html
+html
+  head
+    meta[name="viewport" content="width-device-width, initial-scale-1.0"]
+    title
+      | MyBooze
+    = stylesheet_link_tag    "application", media: "all",
+    -     "data-turbolinks-track" => true
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+    script[src="//maps.google.com/maps/api/js?key=AIzaSyD0ECYk2-k960qU6qN1pD29zSLALZTGJr0"]
+    script[src="//cdn.rawgit.com/mahnunchik/markerclustererplus/master/dist/markerclusterer.min.js"]
+    script[src="//cdn.rawgit.com/printercu/google-maps-utility-library-v3-read-only/master/infobox/src/infobox_packed.js" type="text/javascript"]
+    = csrf_meta_tags
+  body
+    input#nav-toggle[type="checkbox" hidden]
+    .nav
+      label.nav-toggle[for="nav-toggle" onclick]
+      - if session[:user_id]
+        h2.logo
+          =link_to (image_tag current_user.profile.avatar(:thumb), :class => "avatar"), profile_path(current_user.profile)
+          = current_user.profile.name
+        - if admin?
+          = link_to "Admin panel", admin_path
+        - unless current_user.meetings.empty?
+          ul
+            |  Мои встречи:
+            - current_user.meetings.each do |meeting|
+              li
+                = link_to meeting.title, meeting_path(meeting)
+        - else
+          |  Запланированных встреч нет!
+      - else
+        h2.logo
+          |  Войдите или зарегистрируйтесь!
+        ul
+          li
+            = link_to "Войти", login_path
+          li
+            = link_to "Зарегистрироваться", new_user_path
+    .mask-content
+    main[role="main"]
+      header
+        = link_to image_tag("logo.png"), root_path
+        #login
+          - if session[:user_id]
+            |  Добро пожаловать,
+            = link_to current_user.name, profile_path(current_user.profile)
+            =link_to  "Выйти", logout_path, method: :get
+          - else
+            =link_to  "Зарегистрируйтесь", new_user_path
+            |  , или
+            =link_to  "Войдите", login_path
+      |  <div class="
+      = controller.controller_name
+      | ">
+      = yield

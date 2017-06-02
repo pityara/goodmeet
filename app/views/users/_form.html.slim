@@ -1,0 +1,29 @@
+= form_for user, :html => { :multipart => true } do |f|
+  - if user.errors.any?
+    #error_explanation
+      h2
+        = pluralize(user.errors.count, "error")
+        |  сведения о данном пользователе не могут быть обновлены:
+      ul
+        - user.errors.full_messages.each do |message|
+          li
+            = message
+  fieldset
+    legend
+      | Введите информацию о пользователе
+    .field
+      = f.label "Имя"
+      = f.text_field :name
+    .field
+      = f.label "Пароль"
+      = f.password_field :password
+    .field
+      = f.label "Пароль еще раз"
+      = f.password_field :password_confirmation
+    - if session[:user_id]
+      .field
+        = f.label :status
+        br
+        = f.collection_select :status_id, Status.all, :id, :name
+    .actions
+      = f.submit

@@ -1,0 +1,27 @@
+- if notice
+  p#notice
+    = notice
+= image_tag @profile.avatar.url(:thumb), class: "avatar"
+p
+  strong
+    | Имя:
+  = @profile.name
+p
+  strong
+    | Возраст:
+  = @profile.age
+p
+  strong
+    | Город:
+  = @profile.city
+p
+  strong
+    | Рейтинг:
+  = @profile.rating
+p
+  strong
+    | Status:
+  = @profile.user.status.name
+p
+  - if @profile == current_user.profile
+    = link_to "Редактировать", edit_profile_path(@profile)

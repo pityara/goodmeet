@@ -1,0 +1,30 @@
+- if notice
+  p#notice
+    = notice
+h1
+  | Встречи
+- @meetings.each do |meeting|
+  .line
+    |  <div class="
+    = cycle('entry_l', 'entry_r')
+    | ">
+    =link_to image_tag(meeting.image), meeting_path(meeting)
+    strong
+      = truncate(meeting.title, length: 12)
+    br
+    |  Создатель:
+    = link_to meeting.creator.user.profile.name, profile_path(meeting.creator.user.profile)
+    |  Требуемый рейтинг:
+    = meeting.required_rating
+    - if session[:user_id]
+      - if admin? || moder?
+        = link_to  "Удалить", meeting, method: :delete, data: { confirm: 'Вы уверены?' }
+        = link_to  "Редактировать", edit_meeting_path(meeting)
+    br
+    |  Дата:
+    = meeting.date
+.line
+  .entry_l
+    =link_to image_tag('meeting_add_img.jpg'), new_meeting_path
+    h2
+      |  Создать встречу
