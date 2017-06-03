@@ -1,24 +1,24 @@
 /*
  * This is a manifest file that'll be compiled into application.css, which will
  * include all the files listed below.
- * 
+ *
  * Any CSS and SCSS file within this directory, lib/assets/stylesheets,
  * vendor/assets/stylesheets, or vendor/assets/stylesheets of plugins, if any,
  * can be referenced here using a relative path.
- * 
+ *
  * You're free to add application-wide styles to this file and they'll appear
  * at the bottom of the compiled file so the styles you add here take
  * precedence over styles defined in any styles defined in the other CSS/SCSS
  * files in this directory. It is generally better to create a new file per
  * style scope.
- * 
+ *
  *= require_tree .
  *= require_self
  *= require jquery-ui/datepicker
  */
 
 
-  .avatar {
+.avatar {
     margin: 10px;
     padding: 0;
     width:64px;
@@ -26,39 +26,39 @@
     background: #c2c2c2;
     border: 1px solid #000;
     box-shadow: -19px 0 22px -19px #000, 19px 0 22px -19px #000;
-        -webkit-border-radius: 50em;
-        -moz-border-radius: 50em;
-        border-radius: 50em;
+    -webkit-border-radius: 50em;
+    -moz-border-radius: 50em;
+    border-radius: 50em;
   }
- .button { 
- border-top: 1px solid #ffcb82; 
- background: #d68965; 
- background: -webkit-gradient(linear, left top, left bottom, from(#fcc500), to(#d68965)); background: -moz-linear-gradient(top, #fcc500, #d68965); 
- background: -ms-linear-gradient(top, #fcc500, #d68965); 
- background: -o-linear-gradient(top, #fcc500, #d68965); 
- padding: 9px 18px; 
- -webkit-border-radius: 8px; 
- -moz-border-radius: 8px; 
- border-radius: 8px; 
- -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2); 
- -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2); 
- box-shadow: 0 1px 2px rgba(0,0,0,.2); 
- text-shadow: rgba(0,0,0,.4) 0 1px 0; color: #ffffff; 
- font-size: 11px; 
- font-family: Helvetica, Arial, Sans-Serif; 
- text-decoration: none; 
- vertical-align: middle; 
- } 
- .button:hover { 
- color: #fcebea; 
- background: #ff6f00; 
- background: -webkit-gradient(linear, left top, left bottom, from(#e39700), to(#ff6f00)); background: -moz-linear-gradient(top, #e39700, #ff6f00); 
- background: -ms-linear-gradient(top, #e39700, #ff6f00); 
- background: -o-linear-gradient(top, #e39700, #ff6f00); 
- } 
- .button:active { 
- border-top-color: #ff0000; 
- background: #ff0000; 
+ .button {
+ border-top: 1px solid #ffcb82;
+ background: #d68965;
+ background: -webkit-gradient(linear, left top, left bottom, from(#fcc500), to(#d68965)); background: -moz-linear-gradient(top, #fcc500, #d68965);
+ background: -ms-linear-gradient(top, #fcc500, #d68965);
+ background: -o-linear-gradient(top, #fcc500, #d68965);
+ padding: 9px 18px;
+ -webkit-border-radius: 8px;
+ -moz-border-radius: 8px;
+ border-radius: 8px;
+ -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+ -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+ box-shadow: 0 1px 2px rgba(0,0,0,.2);
+ text-shadow: rgba(0,0,0,.4) 0 1px 0; color: #ffffff;
+ font-size: 11px;
+ font-family: Helvetica, Arial, Sans-Serif;
+ text-decoration: none;
+ vertical-align: middle;
+ }
+ .button:hover {
+ color: #fcebea;
+ background: #ff6f00;
+ background: -webkit-gradient(linear, left top, left bottom, from(#e39700), to(#ff6f00)); background: -moz-linear-gradient(top, #e39700, #ff6f00);
+ background: -ms-linear-gradient(top, #e39700, #ff6f00);
+ background: -o-linear-gradient(top, #e39700, #ff6f00);
+ }
+ .button:active {
+ border-top-color: #ff0000;
+ background: #ff0000;
  }
 
 
@@ -128,7 +128,7 @@
 }
 
 
-/* определяем текст кнопки 
+/* определяем текст кнопки
  * символ Unicode (TRIGRAM FOR HEAVEN)
 */
 
@@ -158,7 +158,7 @@
 
 
 /**
- * изменение положения переключателя 
+ * изменение положения переключателя
  * при просмотре на мобильных устройствах
  * когда навигация раскрыта, распологаем внутри панели
 */
@@ -184,7 +184,7 @@
 }
 
 
-/* 
+/*
  * смещение контента страницы
  * на размер ширины панели,
  * фишка необязательная, на любителя
@@ -199,7 +199,7 @@
 
 /*
  * изменение символа переключателя,
- * привычный крестик (MULTIPLICATION X), 
+ * привычный крестик (MULTIPLICATION X),
  * вы можете испльзовать любой другой значок
 */
 
@@ -251,7 +251,7 @@ body {
 
 
 /**
- * Формируем стиль заголовка (логотип) панели 
+ * Формируем стиль заголовка (логотип) панели
 */
 
 .nav h2 {
@@ -426,7 +426,7 @@ body {
 
 
 /**
- * анимируем линию подчеркивания 
+ * анимируем линию подчеркивания
  * ссылок при наведении
  */
 
@@ -443,20 +443,22 @@ body {
     -webkit-transition: width 0s ease;
     transition: width 0s ease;
 }
+
 a:hover {
   background: none;
+  color: #000000;
 }
- div, span, body {
-  //background-color: #ADD8E6;
- }
  body {
+  background: #fafafa;
   margin-top:0;
   width:100%;
  }
 header {
   margin:0;
   z-index: 1999;
-  //position: fixed;
+  position: fixed;
+  right: 0;
+  top: 0;
   background-color: #f4ad3d;
   width:99%;
   height: 50px;

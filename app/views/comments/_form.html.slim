@@ -4,15 +4,15 @@
   = form_for([@meeting, @meeting.comments.build]) do |f|
     |      
     p
-      |       
+      |      
       = f.label "Введите текст"
       br
-      |       
+      |      
       = f.text_area :body
       |      
     |      
     p
-      |       
+      |      
       = f.submit
       |      
 - else
