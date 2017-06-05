@@ -2,10 +2,53 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .meetings {
-  clear: both;
-  margin: 7em;
   height: 50em;
   width: 100%;
+  .meeting_page {
+    background: #ffffff;
+    width: 80%;
+    border: 1px solid #c8c8c8;
+    h2 {
+      text-align: center;
+    }
+    .description {
+      text-align: center;
+    }
+    .image {
+      text-align:center;
+      padding-bottom: 10em;
+      border-bottom: 2px dotted black;
+    }
+    #map {
+      margin: auto;
+      width: 600px;
+      height: 300px;
+    }
+    .address {
+      text-align: center;
+      padding-bottom: 10em;
+      border-bottom: 2px dotted black;
+    }
+    .comments {
+      h2 {
+      padding-left: 10px;
+        text-align: left;
+      }
+      .comment {
+        .avatar {
+          width: 30px;
+          height: 30px;
+          float:left;
+        }
+        .text {
+          padding-top: 12px;
+        }
+      .form {
+
+      }
+      }
+    }
+  }
   .meeting {
     border-radius: 5px;
     background: #ffffff;
@@ -14,7 +57,7 @@
     height: 200px;
     width: 350px;
     padding: 10px;
-    border: 2px solid #c8c8c8;
+    border: 1px solid #c8c8c8;
     h2 {
     }
     .description {
@@ -23,7 +66,9 @@
       width: 15em;
       height: 10em;
       border-radius: 5px;
+      float: right;
     }
+    clear: both;
   }
   .meeting:hover {
     background: #fafafa;

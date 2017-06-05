@@ -24,7 +24,6 @@
     width:64px;
     height:64px;
     background: #c2c2c2;
-    border: 1px solid #000;
     box-shadow: -19px 0 22px -19px #000, 19px 0 22px -19px #000;
     -webkit-border-radius: 50em;
     -moz-border-radius: 50em;
@@ -450,11 +449,10 @@ a:hover {
 }
  body {
   background: #fafafa;
-  margin-top:0;
+  margin:10em;
   width:100%;
  }
 header {
-  margin:0;
   z-index: 1999;
   position: fixed;
   right: 0;
@@ -463,6 +461,7 @@ header {
   width:99%;
   height: 50px;
   padding: 10px;
+  margin-bottom:0;
   font: small-caps 40px/40px "Times New Roman", serif;
   img {
     margin-left: 60px;

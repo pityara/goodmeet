@@ -1,33 +1,46 @@
 - if notice
   p#notice
     = notice
-#mtitle
-  = @meeting.title
-#meeting
-  #description
-    = image_tag @meeting.image(:thumb), :class => "meeting_image"
-    = sanitize @meeting.description
-  #visiters
-    strong
-      | Создатель встречи:
-    .visiter
-      = link_to (image_tag @meeting.creator.user.profile.avatar(:thumb), :class => "avatar"), profile_path(@meeting.creator.user.profile)
-      = @meeting.creator.user.profile.name
-    |  Участники:
-    - @meeting.users.each do |user|
-      .visiter
-        =link_to (image_tag user.profile.avatar(:thumb), :class => "avatar"), profile_path(user.profile)
-        = user.profile.name
-  br
-  #comments
+.meeting_page
+  h2
+    = @meeting.title
+  .description
+    = @meeting.description
+  .image
+    = image_tag @meeting.image.url(:thumb)
+  h2
+    | Где пройдет?
+  #map
+  .address
+    b Адрес:
+    p
+      = @meeting.address
+  .comments
     h2
       | Комментарии
     = render @meeting.comments
-  = render 'comments/form'
-  - if session[:user_id]
-    - unless @meeting.users.find_by(id: session[:user_id]) or @meeting.creator.user == current_user
-      = link_to 'Учавствовать', participate_meeting_path, class: "button"
-div[style="width: 800px;"]
-  #map[style="width: 800px; height: 400px;"]
-script[type="text/javascript"]
-  |  handler = Gmaps.build('Google'); handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){ markers = handler.addMarkers([ { "lat": <ruby code="= @meeting.latitude"></ruby>, "lng": <ruby code="= @meeting.longitude"></ruby>, "infowindow": "<ruby code="= @meeting.address"></ruby>" } ]); handler.bounds.extendWith(markers); handler.fitMapToBounds(); });
+  .form
+    = render 'comments/form'
+  javascript:
+    handler = Gmaps.build('Google');
+    handler.buildMap({
+    provider: {
+      disableDefaultUI: true
+      // pass in other Google Maps API options here
+    },
+    internal: {
+      id: 'map'
+    }
+    },
+    function(){
+    markers = handler.addMarkers([
+      {
+        "lat": #{@meeting.latitude},
+        "lng": #{@meeting.longitude},
+        "infowindow": "#{@meeting.address}"
+      }
+    ]);
+    handler.bounds.extendWith(markers);
+    handler.fitMapToBounds();
+    }
+    );

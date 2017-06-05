@@ -2,13 +2,17 @@
   p#notice
     = notice
 - @meetings.each do |meeting|
-    = link_to meeting do
-      .meeting
+      .meeting data-meeting_id=meeting.id
         = image_tag meeting.image.url(:thumb)
         h2
           = meeting.title
         .description
           = truncate(meeting.description, length: 10)
+        - if admin? || moder?
+          .deleteAction
+            |Удалить
+          p
+          = link_to "Редактировать", edit_meeting_path(meeting)
 = link_to new_meeting_path do
   .meeting
     h2

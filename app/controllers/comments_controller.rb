@@ -5,8 +5,8 @@ class CommentsController < ApplicationController
 		@meeting = Meeting.find(params[:meeting_id])
 		comment = Comment.new do |c|
   			c.body = comment_params[:body]
-  			c.meeting_id = params[:meeting_id]
-  			c.user_id = session[:user_id]
+  			c.meeting = @meeting
+  			c.user = current_user
 		end
 		comment.save
 		redirect_to meeting_path(@meeting)
