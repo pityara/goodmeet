@@ -3,7 +3,7 @@
     = notice
 - @meetings.each do |meeting|
       .meeting data-meeting_id=meeting.id
-        = image_tag meeting.image.url(:thumb)
+        = link_to image_tag(meeting.image.url(:thumb)), meeting_path(meeting)
         h2
           = meeting.title
         .description

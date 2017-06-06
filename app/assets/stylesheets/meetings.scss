@@ -50,6 +50,7 @@
     }
   }
   .meeting {
+    float:left;
     border-radius: 5px;
     background: #ffffff;
     margin: 5px;
@@ -58,6 +59,10 @@
     width: 350px;
     padding: 10px;
     border: 1px solid #c8c8c8;
+    .deleteAction {
+      color: blue;
+      cursor: pointer;
+    }
     h2 {
     }
     .description {
@@ -68,13 +73,9 @@
       border-radius: 5px;
       float: right;
     }
-    clear: both;
   }
   .meeting:hover {
     background: #fafafa;
   }
+  clear: both;
 }
-  .deleteAction {
-    color: blue;
-    cursor: pointer;
-  }

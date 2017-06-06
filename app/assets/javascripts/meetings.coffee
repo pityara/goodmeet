@@ -1,5 +1,5 @@
 jQuery ->
-  $('#meeting_date').datepicker({ dateFormat: 'dd-mm-yy' }).val()
+  $('input#meeting_date').datepicker({ dateFormat: 'dd-mm-yy' }).val()
 jQuery ->
   $('.deleteAction').click ->
     current_meeting = $(this).parents('div')[0];
