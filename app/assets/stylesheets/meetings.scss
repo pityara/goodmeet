@@ -34,6 +34,7 @@
       border-bottom: 2px dotted black;
     }
     .comments {
+      display: none;
       h2 {
       padding-left: 10px;
         text-align: left;
@@ -52,6 +53,12 @@
       }
       }
     }
+  }
+  .visiters {
+    text-align:center;
+    border-bottom: 2px dotted black;
+    inline: block;
+    padding-bottom: 10em;
   }
   .meeting {
     float:left;

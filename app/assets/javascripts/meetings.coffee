@@ -12,4 +12,7 @@ $(document).on 'turbolinks:load', ->
           $(current_meeting).fadeOut(200);
           console.log(result)
       });
-
+$(document).on 'turbolinks:load', ->
+  $('.show_comments').on "ajax:success", (e, data, status, xhr) ->
+    $('.comments').fadeIn(200)
+    $(this).fadeOut(200)

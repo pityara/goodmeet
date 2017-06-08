@@ -15,16 +15,17 @@
     b Адрес:
     p
       = @meeting.address
+  .visiters
+    h2
+      |Участники:
+    = render @meeting.users
+  =link_to "Показать комментарии", meeting_path(@meeting), class: "show_comments", remote: true
   .comments
     h2
-      | Комментарии
+      | Последние комментарии
     = render @meeting.comments
   .form
     = render 'comments/form'
-  javascript:
-    meeting_lat = #{@meeting.latitude}
-    meeting_lon = #{@meeting.longitude}
-    meeting_place = '#{@meeting.address}'
 javascript:
   handler = Gmaps.build('Google');
   handler.buildMap({

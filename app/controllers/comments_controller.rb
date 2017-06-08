@@ -1,6 +1,8 @@
 class CommentsController < ApplicationController
 	before_action :authorized_admin, only: [:destroy, :update]
 	before_action :authorized_moderator, only: [:destroy, :update]
+
+
 	def create
 		@meeting = Meeting.find(params[:meeting_id])
 		@comment = Comment.new do |c|
