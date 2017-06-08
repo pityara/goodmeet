@@ -5,18 +5,22 @@ class ApplicationController < ActionController::Base
   private
 
     def admin?
-      if User.find(session[:user_id]).status_id == 1
-        true
-      else
-        false
+      if current_user
+        if User.find(session[:user_id]).status_id == 1
+          true
+        else
+          false
+        end
       end
     end
 
     def moder?
-      if User.find(session[:user_id]).status_id == 2
-        true
-      else
-        false
+      if current_user
+        if User.find(session[:user_id]).status_id == 2
+          true
+        else
+          false
+        end
       end
     end
 
@@ -31,7 +35,7 @@ class ApplicationController < ActionController::Base
     end
 
   	def authorized_admin
-  		unless current_user.status_id == 1 
+  		unless current_user.status_id == 1
   			redirect_to root_path, notice: "У вас нет прав администратора!"
   		end
   	end
