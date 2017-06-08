@@ -12,11 +12,20 @@ class MeetingsController < ApplicationController
     else
       @meetings = Meeting.all
     end
+    @hash = Gmaps4rails.build_markers(@meetings) do |meeting, marker|
+      marker.lat meeting.latitude
+      marker.lng meeting.longitude
+      marker.infowindow meeting.title
+    end
   end
 
   # GET /meetings/1
   # GET /meetings/1.json
   def show
+    @hash = Gmaps4rails.build_markers(@meeting) do |meeting, marker|
+      marker.lat meeting.latitude
+      marker.lng meeting.longitude
+    end
   end
 
   # GET /meetings/new

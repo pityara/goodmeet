@@ -22,8 +22,12 @@
   .form
     = render 'comments/form'
   javascript:
-    handler = Gmaps.build('Google');
-    handler.buildMap({
+    meeting_lat = #{@meeting.latitude}
+    meeting_lon = #{@meeting.longitude}
+    meeting_place = '#{@meeting.address}'
+javascript:
+  handler = Gmaps.build('Google');
+  handler.buildMap({
     provider: {
       disableDefaultUI: true
       // pass in other Google Maps API options here
@@ -31,16 +35,9 @@
     internal: {
       id: 'map'
     }
-    },
-    function(){
-    markers = handler.addMarkers([
-      {
-        "lat": #{@meeting.latitude},
-        "lng": #{@meeting.longitude},
-        "infowindow": "#{@meeting.address}"
-      }
-    ]);
+  },
+  function(){
+    markers = handler.addMarkers(#{raw @hash.to_json});
     handler.bounds.extendWith(markers);
     handler.fitMapToBounds();
-    }
-    );
+  })

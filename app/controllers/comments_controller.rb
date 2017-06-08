@@ -3,20 +3,25 @@ class CommentsController < ApplicationController
 	before_action :authorized_moderator, only: [:destroy, :update]
 	def create
 		@meeting = Meeting.find(params[:meeting_id])
-		comment = Comment.new do |c|
+		@comment = Comment.new do |c|
   			c.body = comment_params[:body]
   			c.meeting = @meeting
   			c.user = current_user
 		end
-		comment.save
-		redirect_to meeting_path(@meeting)
+		respond_to do |format|
+			if @comment.save
+				format.js
+			end
+		end
 	end
 
 	def destroy
 		@meeting = Meeting.find(params[:meeting_id])
 		@comment = @meeting.comments.find(params[:id])
 		@comment.destroy
-		redirect_to meeting_path(@meeting)
+		respond_to do |format|
+			format.js
+		end
 	end
 	private
 

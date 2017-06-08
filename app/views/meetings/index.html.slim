@@ -1,9 +1,10 @@
 - if notice
   p#notice
     = notice
+#map
 - @meetings.each do |meeting|
       .meeting data-meeting_id=meeting.id
-        = link_to image_tag(meeting.image.url(:thumb)), meeting_path(meeting)
+        = link_to image_tag(meeting.image.url(:thumb)), meeting_path(meeting), class: "meeeting_link"
         h2
           = meeting.title
         .description
@@ -12,8 +13,24 @@
           .deleteAction
             |Удалить
           p
-          = link_to "Редактировать", edit_meeting_path(meeting)
-= link_to new_meeting_path do
+          = link_to "Редактировать", edit_meeting_path(meeting), data: { turbolinks: false }
+= link_to new_meeting_path, data: { turbolinks: false } do
   .meeting
     h2
       | Добавить новую встречу
+javascript:
+  handler = Gmaps.build('Google');
+  handler.buildMap({
+    provider: {
+      disableDefaultUI: true
+      // pass in other Google Maps API options here
+    },
+    internal: {
+      id: 'map'
+    }
+  },
+  function(){
+    markers = handler.addMarkers(#{raw @hash.to_json});
+    handler.bounds.extendWith(markers);
+    handler.fitMapToBounds();
+  })

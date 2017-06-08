@@ -1,6 +1,6 @@
 jQuery ->
-  $('input#meeting_date').datepicker({ dateFormat: 'dd-mm-yy' }).val()
-jQuery ->
+  $('#meeting_date').datepicker({ dateFormat: 'dd-mm-yy' }).val()
+$(document).on 'turbolinks:load', ->
   $('.deleteAction').click ->
     current_meeting = $(this).parents('div')[0];
     if(confirm("Точно удалить?"))
@@ -12,3 +12,4 @@ jQuery ->
           $(current_meeting).fadeOut(200);
           console.log(result)
       });
+
