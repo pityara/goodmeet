@@ -2,7 +2,7 @@ class MeetingsController < ApplicationController
   skip_before_action :authorized_user, only: [:index, :show]
   before_action :authorized_admin, only: [:destroy, :edit, :update]
   before_action :authorized_moderator, only: [:destroy, :edit, :update]
-  before_action :set_meeting, only: [:show, :edit, :update, :destroy]
+  before_action :set_meeting, only: [:show, :edit, :update, :destroy, :participate]
 
   # GET /meetings
   # GET /meetings.json
@@ -26,6 +26,8 @@ class MeetingsController < ApplicationController
       marker.lat meeting.latitude
       marker.lng meeting.longitude
     end
+    @comments = @meeting.comments.page(params[:page] || 1).per(4)
+    #render action: :show, layout: request.xhr? == nil
   end
 
   # GET /meetings/new
@@ -70,8 +72,12 @@ class MeetingsController < ApplicationController
   end
 
   def participate
-    Meeting.find(params[:id]).users << User.find(session[:user_id])
-    redirect_to meeting_path($meeting), notice: 'Теперь вы учавствуете в этой встрече'
+    if @meeting.users.exists?(current_user)
+      redirect_to @meeting, notice: 'Вы уже учавствуете в этой встрече!'
+    else
+      @meeting.users << current_user
+      redirect_to @meeting, notice: 'Теперь вы учавствуете в этой встрече'
+    end
   end
 
   # DELETE /meetings/1

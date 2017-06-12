@@ -1,0 +1,2 @@
+$(".comments_block").html ("<%= escape_javascript(render @comments ) %>");
+$('.pagination').html ("<%= escape_javascript(paginate @comments ) %>");

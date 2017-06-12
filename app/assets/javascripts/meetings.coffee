@@ -13,6 +13,7 @@ $(document).on 'turbolinks:load', ->
           console.log(result)
       });
 $(document).on 'turbolinks:load', ->
-  $('.show_comments').on "ajax:success", (e, data, status, xhr) ->
-    $('.comments').fadeIn(200)
-    $(this).fadeOut(200)
+  $(document.body).on 'click', '.pagination a', ->
+    $('.pagination').html 'Комментарии загружаются...'
+    $.getScript @href
+    false

@@ -16,14 +16,17 @@
     p
       = @meeting.address
   .visiters
+    = link_to "Учавствовать!", participate_meeting_path
     h2
       |Участники:
-    = render @meeting.users
-  =link_to "Показать комментарии", meeting_path(@meeting), class: "show_comments", remote: true
+    .visiters_list
+      = render @meeting.users
   .comments
     h2
-      | Последние комментарии
-    = render @meeting.comments
+      | Обсуждение встречи
+    .comments_block
+      = render @comments
+    = paginate @comments
   .form
     = render 'comments/form'
 javascript:

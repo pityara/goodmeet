@@ -19,8 +19,7 @@ module ApplicationHelper
 				true
 			else
 				false
-			end
 		end
 	end
-
+end
 end

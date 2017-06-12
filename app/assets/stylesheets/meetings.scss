@@ -2,7 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .meetings {
-  height: 50em;
   width: 100%;
   #map {
     width: 82%;
@@ -34,7 +33,13 @@
       border-bottom: 2px dotted black;
     }
     .comments {
-      display: none;
+      .comments_block {
+        margin: 50px;
+      }
+      .pagination {
+        margin-left: 50px;
+      }
+      width: 100%;
       h2 {
       padding-left: 10px;
         text-align: left;
@@ -57,8 +62,13 @@
   .visiters {
     text-align:center;
     border-bottom: 2px dotted black;
-    inline: block;
-    padding-bottom: 10em;
+    .visiters_list {
+      .profile{
+        display: inline-block;
+        padding-bottom: 10em;
+      }
+      clear: both;
+    }
   }
   .meeting {
     float:left;
