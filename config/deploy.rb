@@ -1,74 +1,71 @@
 require 'mina/bundler'
 require 'mina/rails'
 require 'mina/git'
-require 'mina/rbenv'  # for rbenv support. (https://rbenv.org)
-#require 'mina/rvm'    # for rvm support. (https://rvm.io)
+require 'mina/rbenv'
 
-# Basic settings:
-#   domain       - The hostname to SSH to.
-#   deploy_to    - Path to deploy into.
-#   repository   - Git repo to clone from. (needed by mina/git)
-#   branch       - Branch name to deploy. (needed by mina/git)
+lock '3.2.1'
 
-set :application_name, 'goodmeet'
+set :user, 'deployer'
 set :domain, 'boozeit.ru'
-set :deploy_to, '/var/www/goodmeet'
+set :identity_file, "#{ENV['HOME']}/.ssh/google"
+set :deploy_to, '/var/www/boozeit'
+set :app_path, lambda { "#{deploy_to}/#{current_path}" }
 set :repository, 'https://github.com/pityara/goodmeet'
 set :branch, 'master'
+set :forward_agent, true
 
-# Optional settings:
-set :user, 'deployer'          # Username in the server to SSH to.
-set :ssh_options, '-A'
-#   set :port, '30000'           # SSH port number.
-#   set :forward_agent, true     # SSH forward_agent.
 
-# shared dirs and files will be symlinked into the app-folder by the 'deploy:link_shared_paths' step.
-# set :shared_dirs, fetch(:shared_dirs, []).push('somedir')
-# set :shared_files, fetch(:shared_files, []).push('config/database.yml', 'config/secrets.yml')
+set :rbenv_path, '/home/deployer/.rbenv/'
+set :shared_paths, ['config/database.yml', 'log']
 
-# This task is the environment that is loaded for all remote run commands, such as
-# `mina deploy` or `mina rake`.
 task :environment do
-  # If you're using rbenv, use this to load the rbenv environment.
-  # Be sure to commit your .ruby-version or .rbenv-version to your repository.
    invoke :'rbenv:load'
-
-  # For those using RVM, use this to load an RVM version@gemset.
-  # invoke :'rvm:use', 'ruby-2.4.0-p0@default'
 end
 
-# Put any custom commands you need to run at setup
-# All paths in `shared_dirs` and `shared_paths` will be created on their own.
-task :setup do
-  # command %{rbenv install 2.3.0}
+task :setup => :environment do
+  queue! %[mkdir -p "#{deploy_to}/#{shared_path}/log"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/log"]
+
+  queue! %[mkdir -p "#{deploy_to}/#{shared_path}/config"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/config"]
+
+  queue! %[touch "#{deploy_to}/#{shared_path}/config/database.yml"]
+  queue  %[echo "-----> Be sure to edit '#{deploy_to}/#{shared_path}/config/database.yml'."]
 end
 
 desc "Deploys the current version to the server."
-task :deploy do
-  # uncomment this line to make sure you pushed your local branch to the remote origin
-  # invoke :'git:ensure_pushed'
+task :deploy => :environment do
+  to :before_hook do
+    # Put things to run locally before ssh
+  end
   deploy do
-    # Put things that will set up an empty directory into a fully set-up
-    # instance of your project.
     invoke :'git:clone'
+    invoke :'server:stop_server'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
-    #invoke :'rails:db_migrate'
-    #invoke :'rails:assets_precompile'
+    invoke :'rails:db_migrate'
+    invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
 
-    on :launch do
-      in_path(fetch(:current_path)) do
-        command %{mkdir -p tmp/}
-        command %{touch tmp/restart.txt}
-      end
+    to :launch do
+      queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
+      queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
+      invoke :'server:start_server'
     end
   end
-
-  # you can use `run :local` to run tasks on local machine before of after the deploy scripts
-  # run(:local){ say 'done' }
 end
 
-# For help in making your deploy script, see the Mina documentation:
-#
-#  - https://github.com/mina-deploy/mina/tree/master/docs
+namespace :server do
+  desc 'Stop server'
+  task :stop_server do
+    queue 'echo "-----> Stop Server"'
+    queue 'kill -9 $(lsof -i :3000 -t) || true'
+    queue '[ -f /var/www/admin/admin_app.pid ] && rm /var/www/admin/admin_app.pid || echo "File admin_app.pid not exist"'
+  end
+
+  desc 'Start server'
+  task :start_server do
+    queue 'echo "-----> Start Server"'
+    queue! 'rails s -b 0.0.0.0 -e production -P /var/www/admin/admin_app.pid -d &'
+  end
+end
