@@ -8,11 +8,11 @@ default: &default
   adapter: postgresql
   pool: 5
   timeout: 5000
-  username: postgres
-  password: bulleT123
 
 development:
   database: my_database_development
+  username: postgres
+  password: bulleT123
   <<: *default
 
 # Warning: The database defined as "test" will be erased and
@@ -24,4 +24,6 @@ test:
 
 production:
   database: my_database_production
+  username: postgres
+  password: bulleT123
   <<: *default

@@ -1,8 +1,8 @@
 require 'mina/bundler'
 require 'mina/rails'
 require 'mina/git'
-# require 'mina/rbenv'  # for rbenv support. (https://rbenv.org)
-require 'mina/rvm'    # for rvm support. (https://rvm.io)
+require 'mina/rbenv'  # for rbenv support. (https://rbenv.org)
+#require 'mina/rvm'    # for rvm support. (https://rvm.io)
 
 # Basic settings:
 #   domain       - The hostname to SSH to.
@@ -12,7 +12,7 @@ require 'mina/rvm'    # for rvm support. (https://rvm.io)
 
 set :application_name, 'goodmeet'
 set :domain, 'boozeit.ru'
-set :deploy_to, '/var/www/foobar.com'
+set :deploy_to, '/var/www/goodmeet'
 set :repository, 'https://github.com/pityara/goodmeet'
 set :branch, 'master'
 
@@ -31,10 +31,10 @@ set :ssh_options, '-A'
 task :environment do
   # If you're using rbenv, use this to load the rbenv environment.
   # Be sure to commit your .ruby-version or .rbenv-version to your repository.
-  # invoke :'rbenv:load'
+   invoke :'rbenv:load'
 
   # For those using RVM, use this to load an RVM version@gemset.
-  invoke :'rvm:use', 'ruby-2.4.0-p0@default'
+  # invoke :'rvm:use', 'ruby-2.4.0-p0@default'
 end
 
 # Put any custom commands you need to run at setup
@@ -53,8 +53,8 @@ task :deploy do
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
-    invoke :'rails:db_migrate'
-    invoke :'rails:assets_precompile'
+    #invoke :'rails:db_migrate'
+    #invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
 
     on :launch do

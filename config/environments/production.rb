@@ -75,10 +75,10 @@ Rails.application.configure do
     storage: :s3,
     s3_host_name: "s3-eu-central-1.amazonaws.com",
     s3_credentials: {
-      bucket: "eu-central-1",
+      bucket: "goodmeet",
       access_key_id: "AKIAIPBYDHFTRLQW2XAA",
       secret_access_key: "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",
-      s3_region: "goodmeet",
+      s3_region: "eu-central-1",
     }
   }
   # Use a different logger for distributed setups.
