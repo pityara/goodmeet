@@ -10,7 +10,7 @@ set :deploy_to, "/home/#{fetch(:username)}/#{fetch(:application)}"
 
 # capistrano3/unicorn settings
 set :unicorn_pid, "#{shared_path}/run/unicorn.pid"
-set :unicorn_config_path, "#{shared_path}/config/unicorn.rb"
+set :unicorn_config, "#{shared_path}/config/unicorn.rb"
 
 set :log_level, :info
 
