@@ -1,10 +1,10 @@
 # config valid only for Capistrano 3.2.1
-lock '3.4.1'
+lock '3.8.2'
 
-set :username, 'deployer'
-set :application, 'goodmeet'
+set :username, 'deploy'
+set :application, 'boozeit'
 set :rails_env, 'production'
-set :repo_url, 'https://github.com/pityara/goodmeet'
+set :repo_url, 'https://github.com/pityara/goodmeet.git'
 
 set :deploy_to, "/home/#{fetch(:username)}/#{fetch(:application)}"
 
@@ -21,7 +21,7 @@ set :linked_files, %w{config/secrets.yml config/database.yml}
 set :linked_dirs, %w{public/upload}
 
 namespace :setup do
-  desc 'Uploading config files to server'
+  desc 'Загрузка конфигурационных файлов на сервер'
   task :upload_config do
     on roles(:all) do
       execute :mkdir, "-p #{shared_path}"
@@ -31,21 +31,34 @@ namespace :setup do
     end
   end
 end
-
+namespace :application do
+  desc 'Запуск Unicorn'
+  task :start do
+    on roles(:app) do
+      execute "cd #{release_path} && ~/.rvm/bin/rvm default do bundle exec unicorn_rails -c #{fetch(:unicorn_config)} -E #{fetch(:rails_env)} -D"
+    end
+  end
+  desc 'Завершение Unicorn'
+  task :stop do
+    on roles(:app) do
+      execute "if [ -f #{fetch(:unicorn_pid)} ] && [ -e /proc/$(cat #{fetch(:unicorn_pid)}) ]; then kill -9 `cat #{fetch(:unicorn_pid)}`; fi"
+    end
+  end
+end
 namespace :nginx do
-  desc 'Creating symlink in /etc/nginx/conf.d to an application nginx.conf'
+  desc 'Создание симлинка в /etc/nginx/conf.d на nginx.conf приложения'
   task :append_config do
     on roles :all do
       sudo :ln, "-fs #{shared_path}/config/nginx.conf /etc/nginx/conf.d/#{fetch(:application)}.conf"
     end
   end
-  desc 'Reload nginx'
+  desc 'Релоад nginx'
   task :reload do
     on roles :all do
       sudo :service, :nginx, :reload
     end
   end
-  desc 'Restart nginx'
+  desc 'Рестарт nginx'
   task :restart do
     on roles :all do
       sudo :service, :nginx, :restart
@@ -54,33 +67,10 @@ namespace :nginx do
   after :append_config, :restart
 end
 
+
+
 namespace :deploy do
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      # Your restart mechanism here, for example:
-      invoke 'unicorn:restart'
-    end
-  end
-
-  task :install_js_dependencies do
-    on roles(:all) do
-      within release_path do
-        execute :rake, 'bower:install'
-      end
-    end
-  end
-
-  before :compile_assets, :install_js_dependencies
-  after :publishing, :restart
+  after :finishing, 'application:stop'
+  after :finishing, 'application:start'
   after :finishing, :cleanup
-
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
-    end
-  end
 end
