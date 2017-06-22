@@ -1,5 +1,5 @@
 # working directories of a project on a server
-root        = '/home/deployer/goodmeet'
+root        = '/home/deployer/boozeit'
 rails_root  = "#{root}/current"
 
 # unicorn proccesses pid's
