@@ -49,7 +49,7 @@ group :development do
 end
 
 group :production do
-  gem 'unicorn', '~> 4.8.3'
+  gem 'unicorn', '~> 5.3.0'
 end
 
 group :development do
