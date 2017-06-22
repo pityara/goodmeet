@@ -48,6 +48,18 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
+group :production do
+  gem 'unicorn', '~> 4.8.3'
+end
+
+# Use Capistrano for deployment
+gem 'capistrano', '~> 3.4.0'
+gem 'capistrano-bundler', '~> 1.1.3'
+gem 'capistrano-rails', '~> 1.1.2'
+gem 'capistrano3-unicorn', '~> 0.2.1'
+gem 'capistrano-rbenv', github: "capistrano/rbenv"
+gem 'bower-rails'
+
 gem 'sprockets_better_errors'
 gem 'figaro'
 gem 'paperclip'

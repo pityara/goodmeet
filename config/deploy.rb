@@ -1,71 +1,86 @@
-require 'mina/bundler'
-require 'mina/rails'
-require 'mina/git'
-require 'mina/rbenv'
+# config valid only for Capistrano 3.2.1
+lock '3.4.1'
 
-lock '3.2.1'
+set :username, 'deployer'
+set :application, 'goodmeet'
+set :rails_env, 'production'
+set :repo_url, 'https://github.com/pityara/goodmeet'
 
-set :user, 'deployer'
-set :domain, 'boozeit.ru'
-set :identity_file, "#{ENV['HOME']}/.ssh/google"
-set :deploy_to, '/var/www/boozeit'
-set :app_path, lambda { "#{deploy_to}/#{current_path}" }
-set :repository, 'https://github.com/pityara/goodmeet'
-set :branch, 'master'
-set :forward_agent, true
+set :deploy_to, "/home/#{fetch(:username)}/#{fetch(:application)}"
 
+# capistrano3/unicorn settings
+set :unicorn_pid, "#{shared_path}/run/unicorn.pid"
+set :unicorn_config_path, "#{shared_path}/config/unicorn.rb"
 
-set :rbenv_path, '/home/deployer/.rbenv/'
-set :shared_paths, ['config/database.yml', 'log']
+set :log_level, :info
 
-task :environment do
-   invoke :'rbenv:load'
-end
+# Default value for :linked_files is []
+set :linked_files, %w{config/secrets.yml config/database.yml}
 
-task :setup => :environment do
-  queue! %[mkdir -p "#{deploy_to}/#{shared_path}/log"]
-  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/log"]
+# Default value for linked_dirs is []
+set :linked_dirs, %w{public/upload}
 
-  queue! %[mkdir -p "#{deploy_to}/#{shared_path}/config"]
-  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/config"]
-
-  queue! %[touch "#{deploy_to}/#{shared_path}/config/database.yml"]
-  queue  %[echo "-----> Be sure to edit '#{deploy_to}/#{shared_path}/config/database.yml'."]
-end
-
-desc "Deploys the current version to the server."
-task :deploy => :environment do
-  to :before_hook do
-    # Put things to run locally before ssh
-  end
-  deploy do
-    invoke :'git:clone'
-    invoke :'server:stop_server'
-    invoke :'deploy:link_shared_paths'
-    invoke :'bundle:install'
-    invoke :'rails:db_migrate'
-    invoke :'rails:assets_precompile'
-    invoke :'deploy:cleanup'
-
-    to :launch do
-      queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
-      queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
-      invoke :'server:start_server'
+namespace :setup do
+  desc 'Uploading config files to server'
+  task :upload_config do
+    on roles(:all) do
+      execute :mkdir, "-p #{shared_path}"
+      ['shared/config', 'shared/run'].each do |f|
+        upload!(f, shared_path, recursive: true)
+      end
     end
   end
 end
 
-namespace :server do
-  desc 'Stop server'
-  task :stop_server do
-    queue 'echo "-----> Stop Server"'
-    queue 'kill -9 $(lsof -i :3000 -t) || true'
-    queue '[ -f /var/www/admin/admin_app.pid ] && rm /var/www/admin/admin_app.pid || echo "File admin_app.pid not exist"'
+namespace :nginx do
+  desc 'Creating symlink in /etc/nginx/conf.d to an application nginx.conf'
+  task :append_config do
+    on roles :all do
+      sudo :ln, "-fs #{shared_path}/config/nginx.conf /etc/nginx/conf.d/#{fetch(:application)}.conf"
+    end
+  end
+  desc 'Reload nginx'
+  task :reload do
+    on roles :all do
+      sudo :service, :nginx, :reload
+    end
+  end
+  desc 'Restart nginx'
+  task :restart do
+    on roles :all do
+      sudo :service, :nginx, :restart
+    end
+  end
+  after :append_config, :restart
+end
+
+namespace :deploy do
+  desc 'Restart application'
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      # Your restart mechanism here, for example:
+      invoke 'unicorn:restart'
+    end
   end
 
-  desc 'Start server'
-  task :start_server do
-    queue 'echo "-----> Start Server"'
-    queue! 'rails s -b 0.0.0.0 -e production -P /var/www/admin/admin_app.pid -d &'
+  task :install_js_dependencies do
+    on roles(:all) do
+      within release_path do
+        execute :rake, 'bower:install'
+      end
+    end
+  end
+
+  before :compile_assets, :install_js_dependencies
+  after :publishing, :restart
+  after :finishing, :cleanup
+
+  after :restart, :clear_cache do
+    on roles(:web), in: :groups, limit: 3, wait: 10 do
+      # Here we can do anything such as:
+      # within release_path do
+      #   execute :rake, 'cache:clear'
+      # end
+    end
   end
 end
