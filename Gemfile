@@ -58,7 +58,6 @@ gem 'capistrano-bundler', '~> 1.1.3'
 gem 'capistrano-rails', '~> 1.1.2'
 gem 'capistrano3-unicorn', '~> 0.2.1'
 gem 'capistrano-rbenv', github: "capistrano/rbenv"
-gem 'bower-rails'
 
 gem 'sprockets_better_errors'
 gem 'figaro'
@@ -72,7 +71,6 @@ gem 'slim-rails'
 gem 'underscore-rails'
 gem 'jquery-turbolinks'
 gem 'kaminari'
-gem 'mina'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
