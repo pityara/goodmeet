@@ -24,6 +24,7 @@ namespace :setup do
   desc 'Загрузка конфигурационных файлов на сервер'
   task :upload_config do
     on roles(:all) do
+      sitemap:refresh
       execute :mkdir, "-p #{shared_path}"
       ['shared/config', 'shared/run'].each do |f|
         upload!(f, shared_path, recursive: true)
