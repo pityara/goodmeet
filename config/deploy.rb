@@ -15,7 +15,7 @@ set :unicorn_config, "#{shared_path}/config/unicorn.rb"
 set :log_level, :info
 
 # Default value for :linked_files is []
-set :linked_files, %w{config/secrets.yml config/database.yml}
+set :linked_files, %w{config/secrets.yml config/database.yml config/application.yml}
 
 # Default value for linked_dirs is []
 set :linked_dirs, %w{public/upload}
