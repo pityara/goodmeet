@@ -189,11 +189,7 @@
  * фишка необязательная, на любителя
 */
 
-[id='nav-toggle']:checked ~ main {
-    -webkit-transform: translateX(200px);
-    -moz-transform: translateX(200px);
-    transform: translateX(240px);
-}
+
 
 
 /*
@@ -393,7 +389,13 @@ body {
     padding-left: 15px;
 }
 
-
+/*
+*[id='nav-toggle']:checked ~ main {
+*    -webkit-transform: translateX(200px);
+*    -moz-transform: translateX(200px);
+*    transform: translateX(240px);
+*}
+*/
 /**
  * линия подчеркивания ссылок меню
  */
@@ -448,8 +450,8 @@ a:hover {
   color: #000000;
 }
  body {
-  background: #fafafa;
   margin:10em;
+  background: #fafafa;
   width:100%;
  }
 header {

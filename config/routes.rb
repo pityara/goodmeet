@@ -1,22 +1,16 @@
 Rails.application.routes.draw do
 
+  devise_for :users, controllers: { registrations: 'users/registrations'  }
   resources :profiles do
     get :up_rating, on: :member
   end
   get 'admin' => "admin#index"
 
-  controller :sessions do
-    get 'login' => :new, as: "login"
-    post 'login' => :create
-    get 'logout' => :destroy
-  end
-
 
   get "sessions/create"
 
   get "sessions/destroy"
-
-  resources :users
+  #get 'profiles/:id', as: 'user_root'
 	root 'meetings#index'
 	resources :meetings do
     get :participate, on: :member

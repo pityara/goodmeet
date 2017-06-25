@@ -1,6 +1,6 @@
 class Profile < ApplicationRecord
 	belongs_to :user
-	has_attached_file :avatar, 
+	has_attached_file :avatar,
     styles: { medium: "300x300#", thumb: "100x100#" },
     :convert_options => {
     :thumb => "-quality 75 -strip" },
@@ -16,5 +16,5 @@ class Profile < ApplicationRecord
 
     validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 
-    validates :name, :age, :city, presence: true
+    #validates :name, :age, :city, presence: true
 end

@@ -1,5 +1,4 @@
 class MeetingsController < ApplicationController
-  skip_before_action :authorized_user, only: [:index, :show]
   before_action :authorized_admin, only: [:destroy, :edit, :update]
   before_action :authorized_moderator, only: [:destroy, :edit, :update]
   before_action :set_meeting, only: [:show, :edit, :update, :destroy, :participate]

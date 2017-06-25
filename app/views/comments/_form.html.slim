@@ -1,4 +1,4 @@
-- if session[:user_id]
+- if user_signed_in?
   h2
     | Добавить комментарий:
   = form_for([@meeting, @meeting.comments.build], remote: true) do |f|

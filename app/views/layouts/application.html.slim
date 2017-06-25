@@ -14,7 +14,7 @@ html
     input#nav-toggle[type="checkbox" hidden]
     .nav
       label.nav-toggle[for="nav-toggle" onclick]
-      - if session[:user_id]
+      - if user_signed_in?
         h2.logo
           =link_to (image_tag current_user.profile.avatar(:thumb), :class => "avatar"), profile_path(current_user.profile)
           = current_user.profile.name
@@ -33,22 +33,22 @@ html
           |  Войдите или зарегистрируйтесь!
         ul
           li
-            = link_to "Войти", login_path
+            = link_to "Войти", new_user_session_path
           li
-            = link_to "Зарегистрироваться", new_user_path
+            = link_to "Зарегистрироваться", new_user_registration_path
     .mask-content
     main[role="main"]
       header
         = link_to image_tag("logo.png"), root_path
         #login
-          - if session[:user_id]
+          - if user_signed_in?
             |  Добро пожаловать,
-            = link_to current_user.name, profile_path(current_user.profile)
-            =link_to  "Выйти", logout_path, method: :get
+            = link_to current_user.email, profile_path(current_user.profile)
+            =link_to  "Выйти", destroy_user_session_path, method: :delete
           - else
-            =link_to  "Зарегистрируйтесь", new_user_path
+            =link_to  "Зарегистрируйтесь", new_user_registration_path
             |  , или
-            =link_to  "Войдите", login_path
+            =link_to  "Войдите", new_user_session_path
       |  <div class="
       = controller.controller_name
       | ">

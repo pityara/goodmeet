@@ -4,12 +4,11 @@ h1
 = Time.now
 |  У нас имеется
 = pluralize(@total_meetings, "meeting")
-p
-  = link_to "Пользователи", users_path
+
 div id="users"
   ul
     - @users.each do |user|
       li
-        =  link_to (user.name+" "+user.profile.rating.to_s), profile_path(user.profile)
+        =  link_to (user.email+" "+user.profile.rating.to_s), profile_path(user.profile)
         =  link_to "+", up_rating_profile_path(user.profile)
 
