@@ -58,6 +58,6 @@ class ProfilesController < ApplicationController
     end
 
 	def profile_params
-      params.require(:profile).permit(:name, :city, :age, :avatar, (:rating if admin?))
+      params.require(:profile).permit(:name, :city, :age, :avatar)
     end
 end
